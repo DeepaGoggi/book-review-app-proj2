@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchBooks } from "../redux/bookSlice";
 import BookCard from "../components/BookCard";
 import { Container, Row, Col, Spinner, Alert } from "react-bootstrap";
-
+import { BiLoaderCircle } from "react-icons/bi";
 const Home = () => {
   const dispatch = useDispatch();
   const { items: books, loading, error } = useSelector((state) => state.books);
@@ -17,7 +17,8 @@ const Home = () => {
       <h2 className="mb-4">Books Collection</h2>
       {loading && (
         <div className="text-center my-4">
-          <Spinner animation="border" role="status" />
+          <BiLoaderCircle className="ms-2 spin" color="gray" />
+          <p>Loading books...</p>
         </div>
       )}
 

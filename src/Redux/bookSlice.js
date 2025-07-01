@@ -35,6 +35,7 @@ export const fetchBooks = createAsyncThunk("books/fetchBooks", async () => {
     image:
       item.volumeInfo.imageLinks?.thumbnail ||
       "https://via.placeholder.com/150",
+    description: item.volumeInfo.description || "No description available.",
   }));
 });
 
