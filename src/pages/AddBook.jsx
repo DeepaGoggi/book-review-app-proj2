@@ -14,19 +14,23 @@ const AddBook = () => {
     genre: "",
     rating: "",
     description: "",
+    imageFile: null,
   });
-
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
-
   const handleSubmit = (e) => {
     e.preventDefault();
-
     const newBook = {
       id: Date.now().toString(),
       ...formData,
-      image: "https://via.placeholder.com/150",
+      image: formData.imageFile
+        ? URL.createObjectURL(formData.imageFile)
+        : "https://via.placeholder.com/150",
     };
 
     dispatch(addBook(newBook));

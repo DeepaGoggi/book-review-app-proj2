@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Card } from "react-bootstrap";
 import { FaStar, FaRegStar, FaSpinner } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import { BiLoaderCircle } from "react-icons/bi";
 
 const BookCard = ({ book }) => {
   const [isLoading, setIsLoading] = useState(false);
