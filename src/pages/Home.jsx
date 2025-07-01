@@ -4,17 +4,22 @@ import { fetchBooks } from "../redux/bookSlice";
 import BookCard from "../components/BookCard";
 import { Container, Row, Col, Spinner, Alert } from "react-bootstrap";
 import { BiLoaderCircle } from "react-icons/bi";
+import { Link } from "react-router-dom";
 const Home = () => {
   const dispatch = useDispatch();
   const { items: books, loading, error } = useSelector((state) => state.books);
 
   useEffect(() => {
-    dispatch(fetchBooks());
-  }, [dispatch]);
-
+    if (books.length === 0) {
+      dispatch(fetchBooks());
+    }
+  }, [dispatch, books]);
   return (
-    <Container className="my-4">
+    <Container className=" my-4">
       <h2 className="mb-4">Books Collection</h2>
+      <Link to="/add" className="btn btn-success">
+        Add New Book
+      </Link>
       {loading && (
         <div className="text-center my-4">
           <BiLoaderCircle className="ms-2 spin" color="gray" />

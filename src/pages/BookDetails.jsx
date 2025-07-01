@@ -17,7 +17,7 @@ const BookDetails = () => {
     }
   }, [dispatch, books]);
 
-  const book = books.find((b) => b.id === id);
+  const book = books.find((b) => b.id.toString() === id);
 
   if (loading || books.length === 0 || !book) {
     return (
