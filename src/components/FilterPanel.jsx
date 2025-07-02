@@ -11,7 +11,14 @@ const FilterPanel = ({
   setMinRating,
 }) => {
   return (
-    <Form className="mb-4">
+    <Form
+      className="mb-4"
+      onSubmit={(e) => {
+        e.preventDefault();
+        Enter;
+        handleSearch();
+      }}
+    >
       <Row className="align-items-end">
         <Col md={4}>
           <Form.Control

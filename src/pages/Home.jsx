@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchBooks } from "../redux/bookSlice";
+import { fetchBooks } from "../Redux/bookSlice";
 import BookCard from "../components/BookCard";
 import { Container, Row, Col, Alert } from "react-bootstrap";
 import { BiLoaderCircle } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import FilterPanel from "../components/FilterPanel";
+
 const Home = () => {
   const dispatch = useDispatch();
   const { items: books, loading, error } = useSelector((state) => state.books);
@@ -13,6 +14,7 @@ const Home = () => {
   const [filterGenre, setFilterGenre] = useState("");
   const [minRating, setMinRating] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
+  const [sortKey, setSortKey] = useState("");
 
   useEffect(() => {
     if (books.length === 0) {
@@ -21,27 +23,33 @@ const Home = () => {
   }, [dispatch, books.length]);
 
   const filteredBooks = books.filter((book) => {
-    const genreMatch = filterGenre ? book.genre === filterGenre : true;
+    const genreMatch = filterGenre
+      ? (book.genre || "").trim().toLowerCase() ===
+        filterGenre.trim().toLowerCase()
+      : true;
 
     const ratingValue = typeof book.rating === "number" ? book.rating : 0;
     const ratingMatch = ratingValue >= minRating;
 
     const matchesSearch = searchTerm
-      ? book.title.toLowerCase().includes(searchTerm.toLowerCase())
+      ? (book.title || "").toLowerCase().includes(searchTerm.toLowerCase())
       : true;
+
     return genreMatch && ratingMatch && matchesSearch;
   });
-  // const filteredBooks = books.filter((book) => {
-  //   const genreMatch = filterGenre ? book.genre === filterGenre : true;
-  //   const ratingMatch =
-  //     book.rating !== "Not rated" && parseFloat(book.rating) >= minRating;
-  //   const matchesSearch = searchTerm
-  //     ? book.title.toLowerCase().includes(searchTerm.toLowerCase())
-  //     : true;
-  //   return genreMatch && ratingMatch && matchesSearch;
-  // });
 
-  const genres = Array.from(new Set(books.map((b) => b.genre))).filter(Boolean);
+  const sortedBooks = [...filteredBooks].sort((a, b) => {
+    if (sortKey === "title") return a.title.localeCompare(b.title);
+    if (sortKey === "rating") return b.rating - a.rating;
+    return 0;
+  });
+
+  const genres = Array.from(
+    new Set(books.map((b) => (b.genre || "").trim().toLowerCase()))
+  )
+    .filter(Boolean)
+    .map((g) => g.charAt(0).toUpperCase() + g.slice(1));
+
   return (
     <Container className=" my-4">
       <h2 className="mb-4">Books Collection</h2>
@@ -57,6 +65,20 @@ const Home = () => {
         minRating={minRating}
         setMinRating={setMinRating}
       />
+
+      <div className="mb-3 text-end">
+        <button
+          className="btn btn-secondary"
+          onClick={() => {
+            setSearchTerm("");
+            setFilterGenre("");
+            setMinRating(0);
+            setSortKey("");
+          }}
+        >
+          Reset Filters
+        </button>
+      </div>
 
       {loading && (
         <div className="text-center my-4">
