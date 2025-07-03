@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchBooks } from "../Redux/bookSlice";
+import { fetchBooks } from "../redux/bookSlice";
 import BookCard from "../components/BookCard";
 import { Container, Row, Col, Alert } from "react-bootstrap";
 import { BiLoaderCircle } from "react-icons/bi";

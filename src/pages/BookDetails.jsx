@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchBooks } from "../Redux/bookSlice";
+import { fetchBooks } from "../redux/bookSlice";
 import { Card, Container, Row, Col } from "react-bootstrap";
 import { BiLoaderCircle } from "react-icons/bi";
 
