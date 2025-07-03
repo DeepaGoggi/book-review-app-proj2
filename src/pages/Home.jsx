@@ -52,10 +52,16 @@ const Home = () => {
 
   return (
     <Container className=" my-4">
-      <h2 className="mb-4">Books Collection</h2>
+      <h2 className="mb-4">📚BookSnap</h2>
       <Link to="/add" className="btn btn-success">
         Add New Book
       </Link>
+      <Link to="/about">
+        <button className="btn btn-outline-primary ms-4">
+          Go to About Page
+        </button>
+      </Link>
+
       <FilterPanel
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
